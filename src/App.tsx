@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './App.css';
 import InputField from './components/InputField';
 import TodoList from './components/TodoList';
-import { Todo } from './models/models';
+import { useGlobalContext } from './contexts/AppContext';
 
 const App: React.FC = () => {
+  const { todos, setTodos } = useGlobalContext();
   const [todo, setTodo] = useState<string>('');
-  const [todos, setTodos] = useState<Todo[]>([]);
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (todo) {
@@ -18,7 +18,7 @@ const App: React.FC = () => {
     <div className='App'>
       <span className='heading'>Tasks</span>
       <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
-      <TodoList todos={todos} setTodos={setTodos} />
+      <TodoList />
     </div>
   );
 };
