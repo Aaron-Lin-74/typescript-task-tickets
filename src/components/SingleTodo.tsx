@@ -2,15 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Todo } from '../models/models';
 import { RiEdit2Fill, RiDeleteBin2Fill } from 'react-icons/ri';
 import { MdDownloadDone } from 'react-icons/md';
+import { useGlobalContext } from '../contexts/AppContext';
 import './style.css';
 
 interface Props {
   todo: Todo;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
-const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
+const SingleTodo: React.FC<Props> = ({ todo }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
+  const { todos, setTodos } = useGlobalContext();
 
   // The content of the todo list that is being edited.
   const [editTodo, setEditTodo] = useState<string>(todo.todo);

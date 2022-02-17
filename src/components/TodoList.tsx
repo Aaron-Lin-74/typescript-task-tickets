@@ -1,22 +1,14 @@
 import React from 'react';
-import { Todo } from '../models/models';
 import SingleTodo from './SingleTodo';
 import './style.css';
+import { useGlobalContext } from '../contexts/AppContext';
 
-interface Props {
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-}
-const TodoList = ({ todos, setTodos }: Props) => {
+const TodoList = () => {
+  const { todos } = useGlobalContext();
   return (
     <div className='todos'>
       {todos.map((todo) => (
-        <SingleTodo
-          todo={todo}
-          key={todo.id}
-          todos={todos}
-          setTodos={setTodos}
-        />
+        <SingleTodo todo={todo} key={todo.id} />
       ))}
     </div>
   );
