@@ -4,12 +4,8 @@ import React, { ReactNode } from 'react';
 const defaultHeadingProps = {
   heading: <strong>By Arron Lin</strong>,
 };
-const Heading = ({
-  heading,
-  children,
-}: {
-  children: ReactNode;
-} & typeof defaultHeadingProps) => {
+type HeadingProps = { children: ReactNode } & typeof defaultHeadingProps;
+const Heading = ({ heading, children }: HeadingProps) => {
   return (
     <div>
       {children}
