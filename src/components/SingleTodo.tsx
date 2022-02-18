@@ -5,10 +5,7 @@ import { MdDownloadDone } from 'react-icons/md';
 import { useGlobalContext } from '../contexts/AppContext';
 import './style.css';
 
-interface Props {
-  todo: Todo;
-}
-const SingleTodo: React.FC<Props> = ({ todo }) => {
+const SingleTodo = ({ todo }: { todo: Todo }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const { todos, setTodos } = useGlobalContext();
 
