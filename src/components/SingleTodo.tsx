@@ -2,36 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Todo } from '../models/models';
 import { RiEdit2Fill, RiDeleteBin2Fill } from 'react-icons/ri';
 import { MdDownloadDone } from 'react-icons/md';
-import { useGlobalContext } from '../contexts/AppContext';
+import { useGlobalContext, TodoActionKind } from '../contexts/AppContext';
 import './style.css';
 
 const SingleTodo = ({ todo }: { todo: Todo }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const { todos, setTodos } = useGlobalContext();
+  const { dispatch } = useGlobalContext();
 
   // The content of the todo list that is being edited.
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
 
   const handleEdit = (e: React.FormEvent, id: number) => {
     e.preventDefault();
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, todo: editTodo } : todo))
-    );
+    dispatch({ type: TodoActionKind.Edit, payload: { id, todo: editTodo } });
     setEditMode(false);
   };
 
   // Set the selected todo to done status.
   const handleDone = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
-      )
-    );
+    dispatch({ type: TodoActionKind.Done, payload: { id } });
   };
 
   // Delete the selected todo
   const handleDelete = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    dispatch({ type: TodoActionKind.Remove, payload: { id } });
   };
 
   // Focus the input when click edit

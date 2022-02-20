@@ -4,10 +4,10 @@ import './style.css';
 import { useGlobalContext } from '../contexts/AppContext';
 
 const TodoList = () => {
-  const { todos } = useGlobalContext();
+  const { state } = useGlobalContext();
   return (
     <div className='todos'>
-      {todos.map((todo) => (
+      {state.todos.map((todo) => (
         <SingleTodo todo={todo} key={todo.id} />
       ))}
     </div>

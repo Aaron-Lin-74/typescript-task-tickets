@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import './App.css';
 import InputField from './components/InputField';
 import TodoList from './components/TodoList';
-import { useGlobalContext } from './contexts/AppContext';
+import { useGlobalContext, TodoActionKind } from './contexts/AppContext';
 import Heading from './components/Heading';
 
 const App = () => {
-  const { todos, setTodos } = useGlobalContext();
+  const { dispatch } = useGlobalContext();
   const [todo, setTodo] = useState<string>('');
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (todo) {
-      setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+      dispatch({ type: TodoActionKind.Add, payload: { todo } });
       setTodo('');
     }
   };
