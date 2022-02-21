@@ -2,9 +2,9 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { Todo } from '../models/models';
 
 // Define the type for default state of useContext
-type InitialStateType = {
+interface InitialStateType {
   todos: Todo[];
-};
+}
 
 // Set the initial state of the useContext
 const initialState: InitialStateType = {
@@ -20,7 +20,10 @@ export enum TodoActionKind {
 }
 
 // Defined action object type
-type Action = { type: TodoActionKind; payload: { id: number; todo: string } };
+interface Action {
+  type: TodoActionKind;
+  payload: { id: number; todo: string };
+}
 
 const todoReducer = (state: InitialStateType, action: Action) => {
   const { type, payload } = action;
