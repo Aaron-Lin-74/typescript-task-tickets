@@ -20,39 +20,43 @@ export enum TodoActionKind {
 }
 
 // Defined action object type
-interface Action {
-  type: TodoActionKind;
-  payload: { id: number; todo: string };
-}
+type Action =
+  | { type: TodoActionKind.Add; payload: { todo: string } }
+  | { type: TodoActionKind.Edit; payload: { todo: string; id: number } }
+  | { type: TodoActionKind.Remove; payload: { id: number } }
+  | { type: TodoActionKind.Done; payload: { id: number } };
 
 const todoReducer = (state: InitialStateType, action: Action) => {
-  const { type, payload } = action;
-  switch (type) {
+  switch (action.type) {
     case TodoActionKind.Add:
       return {
         ...state,
         todos: [
           ...state.todos,
-          { id: Date.now(), todo: payload.todo, isDone: false },
+          { id: Date.now(), todo: action.payload.todo, isDone: false },
         ],
       };
     case TodoActionKind.Edit:
       return {
         ...state,
         todos: state.todos.map((todo) =>
-          todo.id === payload.id ? { ...todo, todo: payload.todo } : todo
+          todo.id === action.payload.id
+            ? { ...todo, todo: action.payload.todo }
+            : todo
         ),
       };
     case TodoActionKind.Remove:
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo.id !== payload.id),
+        todos: state.todos.filter((todo) => todo.id !== action.payload.id),
       };
     case TodoActionKind.Done:
       return {
         ...state,
         todos: state.todos.map((todo) =>
-          todo.id === payload.id ? { ...todo, isDone: !todo.isDone } : todo
+          todo.id === action.payload.id
+            ? { ...todo, isDone: !todo.isDone }
+            : todo
         ),
       };
     default:
